@@ -1,6 +1,6 @@
 import { BLOG_POST_QUERY } from "@/lib/blog-query.graphql";
 
-export const getBlogPost = async (slug: string, apiToken:string): Promise<object> => {
+export const getBlogPost = async (slug: string, apiToken:string): Promise<Record<string, unknown>> => {
   const response = await fetch("https://graphql.datocms.com/", {
     headers: {
       Authorization: `Bearer ${apiToken}`,

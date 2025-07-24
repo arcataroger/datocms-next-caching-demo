@@ -1,4 +1,5 @@
 import { getBlogPost } from "@/lib/getBlogPost";
+import BlogPostRenderer, { type BlogPost } from "@/components/BlogPostRenderer";
 
 export default async function ServerBlogPost({
   params,
@@ -7,11 +8,12 @@ export default async function ServerBlogPost({
 }) {
   const { slug } = await params;
 
-  const data = await getBlogPost(slug, process.env.DATOCMS_GRAPHQL_TOKEN!);
+  const data = (await getBlogPost(
+    slug,
+    process.env.DATOCMS_GRAPHQL_TOKEN!,
+  )) as { blogPost: BlogPost };
 
-  return (
-    <pre>
-      <code>{JSON.stringify(data, null, 2)}</code>
-    </pre>
-  );
+  const blogPost = data.blogPost;
+
+  return <BlogPostRenderer blogPost={blogPost} />;
 }
